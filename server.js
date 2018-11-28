@@ -19,10 +19,14 @@ var app = express();
 app.use(express.static("public"));
 
 // Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({
+  defaultLayout: "main"
+}));
 app.set("view engine", "handlebars");
 
 //Configure middleware
@@ -38,9 +42,17 @@ mongoose.connect("mongodb://localhost/news-scraper", {
 // Routes
 
 // Serve index.handlebars to the root route.
-app.get("/", function(req, res) {
-    res.render("index");
-  });
+app.get("/", function (req, res) {
+    db.Article.find({})
+    .then(function(dbArticle) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.render("index", {results: dbArticle});
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
 
 
 // A GET route for scraping the newschoolers website
@@ -73,10 +85,10 @@ app.get("/scrape", function (req, res) {
         });
     });
   });
-  // Render handlebars
-  res.render("index", {
-    result: result
-  });
+  // // Render handlebars
+  // res.render("index", {
+  //   results: result
+  // });
 });
 
 // Start the server
