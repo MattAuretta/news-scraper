@@ -97,10 +97,6 @@ app.get("/scrape", function (req, res) {
         });
     });
   });
-  // // Render handlebars
-  // res.render("index", {
-  //   results: result
-  // });
   res.json("Sucess!")
 });
 
