@@ -72,8 +72,8 @@ app.get("/scrape", function (req, res) {
       var result = {};
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
-      // .children("div.row")
-      // .children("div.col-sm-8")
+        // .children("div.row")
+        // .children("div.col-sm-8")
         .children("h1.ns-card-title")
         .children("a")
         .text();
@@ -96,8 +96,8 @@ app.get("/scrape", function (req, res) {
           console.log(err);
         });
     });
+    res.redirect("/");
   });
-  res.json("Sucess!")
 });
 
 // Start the server
