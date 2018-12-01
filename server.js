@@ -45,12 +45,14 @@ mongoose.connect(MONGODB_URI, {
 
 // Serve index.handlebars to the root route.
 app.get("/", function (req, res) {
-    db.Article.find({})
-    .then(function(dbArticle) {
+  db.Article.find({})
+    .then(function (dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
-      res.render("index", {results: dbArticle});
+      res.render("index", {
+        results: dbArticle
+      });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       // If an error occurred, send it to the client
       res.json(err);
     });
@@ -60,26 +62,34 @@ app.get("/", function (req, res) {
 // A GET route for scraping the newschoolers website
 app.get("/scrape", function (req, res) {
   // First, we grab the body of the html with axios
-  // Save an empty result object
-  var result = {};
   axios.get("https://www.newschoolers.com/home").then(function (response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $(".ns-card-title").each(function (i, element) {
+    $("article.ns-card .col-sm-8").each(function (i, element) {
+      // Save an empty result object
+      var result = {};
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
+      // .children("div.row")
+      // .children("div.col-sm-8")
+        .children("h1.ns-card-title")
         .children("a")
         .text();
+      result.summary = $(this)
+        .children("p")
+        .text();
       result.link = $(this)
+        .children("h1.ns-card-title")
         .children("a")
         .attr("href");
+      console.log(result)
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function (dbArticle) {
           // View the added result in the console
-          console.log(dbArticle);
+          // console.log(dbArticle);
         })
         .catch(function (err) {
           // If an error occurred, log it
@@ -91,6 +101,7 @@ app.get("/scrape", function (req, res) {
   // res.render("index", {
   //   results: result
   // });
+  res.json("Sucess!")
 });
 
 // Start the server
