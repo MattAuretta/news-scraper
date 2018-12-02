@@ -58,6 +58,19 @@ app.get("/", function (req, res) {
     });
 });
 
+app.get("/saved", function (req,res) {
+  db.Article.find({saved: true})
+    .then(function (dbArticle) {
+      // If we were able to successfully find Articles that have been saved, send them back to the client
+      res.render("saved", {
+        results: dbArticle
+      });
+    })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
 
 // A GET route for scraping the newschoolers website
 app.get("/scrape", function (req, res) {
@@ -98,6 +111,20 @@ app.get("/scrape", function (req, res) {
     });
     res.redirect("/");
   });
+});
+
+// Route for grabbing a specific Article by id
+app.get("/articles/:id", function(req, res) {
+  // Using the id passed in the id parameter, find the specified article and update it's saved value to true
+  db.Article.findOneAndUpdate({ _id: req.params.id }, {$set:{saved: true}})
+    .then(function(dbArticle) {
+      // If we were able to successfully find an Article with the given id, send it back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
 });
 
 // Start the server
