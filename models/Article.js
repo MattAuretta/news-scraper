@@ -28,6 +28,11 @@ var ArticleSchema = new Schema({
     type: Boolean,
     default: false
   },
+  createdAt : {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: Date,
   // `comment` is an object that stores a Comment id
   // The ref property links the ObjectId to the Comment model
   // This allows us to populate the Article with an associated Comment
