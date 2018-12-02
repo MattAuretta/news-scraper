@@ -14,3 +14,14 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.btn-wrapper {
+    position: relative;
+}
+
+.save-btn,
+.comment-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}

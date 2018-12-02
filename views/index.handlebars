@@ -45,15 +45,17 @@
 </div>
 
 {{!-- Articles --}}
-{{#each results}}
-<div class="row article data-id={{this._id}}">
-  <div class="col-sm-10">
-    <p>{{this.title}}</p>
-    <p>{{this.summary}}</p>
-    <a href={{this.link}} target="_blank">{{this.link}}</a>
+<div class="container">
+  {{#each results}}
+  <div class="row article data-id={{this._id}}">
+    <div class="col-sm-10">
+      <p>{{this.title}}</p>
+      <p>{{this.summary}}</p>
+      <a href={{this.link}} target="_blank">{{this.link}}</a>
+    </div>
+    <div class="col-sm-2 btn-wrapper">
+      <button type="button" class="btn btn-primary align-middle save-btn" data-id={{this._id}}>Save Article</button>
+    </div>
   </div>
-  <div class="col-sm-2">
-    <button type="button" class="btn btn-primary save-btn" data-id={{this._id}}>Save Article</button>
-  </div>
+  {{/each}}
 </div>
-{{/each}}
