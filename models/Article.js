@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var uniqueValidator = require('mongoose-unique-validator');
 
 // Save a reference to the Schema constructor
 var Schema = mongoose.Schema;
@@ -8,17 +9,20 @@ var ArticleSchema = new Schema({
   // `title` is required and of type String
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   // `title` is required and of type String
   summary: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   // `link` is required and of type String
   link: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   saved: {
     type: Boolean,
@@ -30,8 +34,10 @@ var ArticleSchema = new Schema({
   comment: {
     type: Schema.Types.ObjectId,
     ref: "Comment"
-  }
+  },
 });
+
+ArticleSchema.plugin(uniqueValidator);
 
 // This creates our model from the above schema, using mongoose's model method
 var Article = mongoose.model("Article", ArticleSchema);
