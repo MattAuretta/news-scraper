@@ -149,6 +149,7 @@ app.post("/articles/:id", function(req, res) {
     });
 });
 
+//Route for deleting comments
 app.post("/comments/:id", function (req,res) {
   db.Comment.findByIdAndRemove({_id: req.params.id}, function(err){
     if(err){
