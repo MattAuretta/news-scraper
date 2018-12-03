@@ -149,6 +149,14 @@ app.post("/articles/:id", function(req, res) {
     });
 });
 
+app.post("/comments/:id", function (req,res) {
+  db.Comment.findByIdAndRemove({_id: req.params.id}, function(err){
+    if(err){
+      console.log(err)
+    }
+  })
+})
+
 // Start the server
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");

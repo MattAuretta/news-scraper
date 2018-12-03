@@ -25,7 +25,7 @@ $(".comment-btn").click(function () {
     console.log(data);
     $("#comments-section").empty();
     for (var i = 0; i < data.comment.length; i++) {
-      $("#comments-section").append("<p>" + data.comment[i].body + "</p>");
+      $("#comments-section").append("<div> <p class=comments>" + data.comment[i].body + " <button class='btn btn-danger delete-comment' data-id='" + data.comment[i]._id + "'>Delete</button></p></div>");
     }
     // Append save comment button with article's ID saved as data-id attribute
     $("#save-comment").html("<button class='btn btn-primary' data-id='" + data._id + "' data-dismiss=modal>Save Comment</button>");
@@ -54,4 +54,20 @@ $("#save-comment").click(function () {
 
   // Also, remove the values entered in the input and textarea for note entry
   $("#comment-input").val("");
+});
+
+//Delete comments
+$(document).on("click", ".delete-comment", function (event) {
+  event.preventDefault();
+  var thisId = $(this).attr("data-id");
+  //Post the comment id to the comments route
+  $.ajax({
+    method: "POST",
+    url: "/comments/" + thisId,
+    data: {
+      body: thisId
+    }
+  })
+  //Hide the modal
+  $("#comment-modal").modal("hide");
 });

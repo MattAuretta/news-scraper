@@ -29,3 +29,7 @@
 #comment-input {
     width: 100%;
 }
+
+.comments {
+    display: inline-block;
+}
