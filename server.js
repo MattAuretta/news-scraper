@@ -45,7 +45,7 @@ mongoose.connect(MONGODB_URI, {
 
 // Serve index.handlebars to the root route.
 app.get("/", function (req, res) {
-  db.Article.find({})
+  db.Article.find({}).sort({createdAt: -1})
     .then(function (dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.render("index", {
