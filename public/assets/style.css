@@ -9,6 +9,7 @@ body {
 .article {
     background-color: #aaeff8;
     margin-bottom: 1.5em;
+    border-radius: 10px;
 }
 
 .carousel {
@@ -23,9 +24,8 @@ body {
 
 .save-btn,
 .comment-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    display: block;
+    margin: 1em auto;
 }
 
 #comment-input {
